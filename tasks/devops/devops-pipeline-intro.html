@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure DevOps Training Guide</title>
+</head>
+<body>
+    <h1>Azure DevOps Training Guide</h1>
+
+    <h2>Session 1: Setting up Azure DevOps and GitHub</h2>
+    <h3>Objective</h3>
+    <p>Create Azure DevOps and GitHub accounts, set up an organization and a project in Azure DevOps, and prepare the environment for further tasks.</p>
+
+    <h3>Azure DevOps Account Creation</h3>
+    <ul>
+        <li>Go to <a href="https://dev.azure.com/">Azure DevOps</a>.</li>
+        <li>Sign up or log in with your Microsoft account.</li>
+        <li>Create a new organization by selecting <strong>New Organization</strong>.</li>
+        <li>Create a new project by clicking <strong>New Project</strong>, naming it, and selecting its visibility.</li>
+    </ul>
+
+    <h3>GitHub Account Creation</h3>
+    <ul>
+        <li>Visit <a href="https://github.com/">GitHub</a> and create an account.</li>
+        <li>Create a repository to manage your code.</li>
+    </ul>
+    
+    <p><strong>End of Session 1: Q&A on account creation and initial setup</strong></p>
+
+    <hr>
+
+    <h2>Session 2: Azure VM Creation for Build Agent</h2>
+    <h3>Objective</h3>
+    <p>Set up a virtual machine in Azure to act as a build agent for your Azure DevOps pipelines.</p>
+
+    <h3>Creating an Azure VM</h3>
+    <ul>
+        <li>Log into the <a href="https://portal.azure.com/">Azure Portal</a>.</li>
+        <li>Go to <strong>Virtual Machines</strong> &gt; <strong>Create</strong>.</li>
+        <li>Choose <strong>Ubuntu Server</strong> (or Windows if preferred) and configure necessary details.</li>
+        <li>Configure networking and allow necessary ports for SSH or RDP.</li>
+        <li>Click <strong>Review + Create</strong> and then <strong>Create</strong>.</li>
+    </ul>
+
+    <h3>Configuring the VM as an Agent</h3>
+    <ul>
+        <li>SSH into the VM once it's created.</li>
+        <li>Follow the <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-linux?view=azure-devops">Azure DevOps agent setup documentation</a> to install and configure the agent.</li>
+    </ul>
+
+    <p><strong>End of Session 2: Q&A and review on VM setup</strong></p>
+
+    <hr>
+
+    <h2>Session 3: Azure Web App Creation for Hosting the .NET Application</h2>
+    <h3>Objective</h3>
+    <p>Set up an Azure Web App to host the .NET application you’ll be building.</p>
+
+    <h3>Creating the Azure Web App</h3>
+    <ul>
+        <li>In the Azure Portal, go to <strong>App Services</strong> &gt; <strong>Create</strong>.</li>
+        <li>Configure the details like subscription, resource group, app name, runtime stack, and region.</li>
+        <li>Click <strong>Review + Create</strong> and then <strong>Create</strong>.</li>
+        <li>Test the Web App once it's deployed.</li>
+    </ul>
+
+    <p><strong>End of Session 3: Review and preview of the next steps</strong></p>
+
+    <hr>
+
+    <h2>Session 4: Building and Uploading a .NET Web Application</h2>
+    <h3>Objective</h3>
+    <p>Create a basic .NET web application called <strong>RetailStore</strong> and upload it to GitHub.</p>
+
+    <h3>Create the .NET Web Application</h3>
+    <ul>
+        <li>Open a terminal and run the following commands:</li>
+        <pre><code>dotnet new webapp -o RetailStore
+cd RetailStore
+dotnet run</code></pre>
+        <li>Verify the app is running locally by navigating to <strong>http://localhost:5000</strong>.</li>
+    </ul>
+
+    <h3>Upload the Application to GitHub</h3>
+    <ul>
+        <li>Initialize a Git repository:</li>
+        <pre><code>git init
+git add .
+git commit -m "Initial commit for RetailStore application"</code></pre>
+        <li>Create a new repository on GitHub and push the code:</li>
+        <pre><code>git remote add origin &lt;your-github-repo-url&gt;
+git branch -M main
+git push -u origin main</code></pre>
+    </ul>
+
+    <p><strong>End of Session 4: Q&A on .NET app creation and GitHub repository setup</strong></p>
+
+    <hr>
+
+    <h2>Session 5: Linking GitHub to Azure DevOps</h2>
+    <h3>Objective</h3>
+    <p>Integrate GitHub with Azure DevOps to enable CI/CD pipelines.</p>
+
+    <h3>Set Up GitHub Integration</h3>
+    <ul>
+        <li>In Azure DevOps, go to <strong>Pipelines</strong> &gt; <strong>Create Pipeline</strong>.</li>
+        <li>Select <strong>GitHub</strong> as the repository source and authenticate with GitHub.</li>
+        <li>Choose the <strong>RetailStore</strong> repository and configure the pipeline.</li>
+        <li>Use the <strong>.NET Core</strong> template for setting up builds and releases.</li>
+    </ul>
+
+    <p><strong>End of Session 5: Review and demo on GitHub integration</strong></p>
+
+    <hr>
+
+    <h2>Session 6: Linking Azure to Azure DevOps using a Service Principal</h2>
+    <h3>Objective</h3>
+    <p>Set up a Service Principal to authenticate Azure DevOps with Azure for deploying resources.</p>
+
+    <h3>Create a Service Principal in Azure</h3>
+    <ul>
+        <li>Go to <strong>Azure Active Directory</strong> &gt; <strong>App Registrations</strong> &gt; <strong>New Registration</strong>.</li>
+        <li>Name it <strong>RetailStoreSP</strong> and create a client secret.</li>
+        <li>Save the <strong>Client ID</strong> and <strong>Client Secret</strong>.</li>
+    </ul>
+
+    <h3>Assign Required Roles</h3>
+    <ul>
+        <li>In the Azure Portal, go to your <strong>Subscription</strong> and assign the <strong>Contributor</strong> role to the Service Principal.</li>
+    </ul>
+
+    <h3>Linking Azure DevOps to Azure with the Service Principal</h3>
+    <ul>
+        <li>In Azure DevOps, go to <strong>Project Settings</strong> &gt; <strong>Service connections</strong> &gt; <strong>New service connection</strong>.</li>
+        <li>Select <strong>Azure Resource Manager</strong> and use the <strong>Service Principal</strong> credentials.</li>
+    </ul>
+
+    <p><strong>End of Session 6: Q&A and wrap-up of training tasks</strong></p>
+
+</body>
+</html>
